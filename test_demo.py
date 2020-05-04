@@ -25,6 +25,7 @@ def all_queens_placed_on_board(self):
 
 
 def descending_diagonal_index(param: Queen):
+    """2 queens are on same descending diagonal if both of their `i` are equal, where `i = (row + column)`"""
     index = param.coordinates[0] + param.coordinates[1]
     return index
 

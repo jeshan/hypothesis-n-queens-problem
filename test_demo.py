@@ -2,7 +2,7 @@ from hypothesis import settings, note
 from hypothesis.stateful import RuleBasedStateMachine, rule, invariant, precondition
 from hypothesis.strategies import integers
 
-N = 4  # this is the "N" in the N-queens problem
+N = 4  # this is the "N" in the N-queens problem. Note that increasing it a tad will slow down the run a lot.
 
 
 class Queen(object):
@@ -14,7 +14,7 @@ class Queen(object):
         return f"Queen {self.i} on (column={self.coordinates[0]}, row={self.coordinates[1]})"
 
 
-def all_queens_placed_on_board(self):
+def all_queens_on_valid_positions(self):
     all_on_board = all(map(lambda x: len(x.coordinates), self.queens))  # are they placed on board yet?
     if not all_on_board:
         return False
@@ -53,7 +53,7 @@ class NQueensProblem(RuleBasedStateMachine):
         queen.coordinates = (column, row)
 
     @invariant()
-    @precondition(all_queens_placed_on_board)
+    @precondition(all_queens_on_valid_positions)
     def unsolved_yet(self):
         queens_on_distinct_columns = len(set(map(lambda x: x.coordinates[0], self.queens))) == N
         if not queens_on_distinct_columns:
